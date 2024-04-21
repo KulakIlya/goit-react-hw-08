@@ -1,9 +1,12 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
-import { addContact } from '../../redux/contactsSlice';
+import FormLabel from './FormLabel';
+
+import { addContact } from '../../redux/contactsOps';
+
 import styles from './ContactForm.module.css';
 
 const INITIAL_VALUES = { name: '', number: '', id: '' };
@@ -28,16 +31,8 @@ const ContactForm = () => {
       validationSchema={VALIDATION_SCHEMA}
     >
       <Form className={styles.form} autoComplete="off">
-        <label className={styles.formLabel}>
-          <span className={styles.labelTitle}>Name</span>
-          <Field name="name" className={styles.formField} />
-          <ErrorMessage name="name" component="span" className={styles.errorMessage} />
-        </label>
-        <label>
-          <span className={styles.labelTitle}>Number</span>
-          <Field name="number" className={styles.formField} />
-          <ErrorMessage name="number" component="span" className={styles.errorMessage} />
-        </label>
+        <FormLabel title="name" />
+        <FormLabel title="number" />
         <button type="submit" className={styles.btn}>
           Add contact
         </button>
