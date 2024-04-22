@@ -1,29 +1,54 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import { FaPhoneAlt, FaUser } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
 
-import { deleteContact } from '../../../redux/contactsOps';
+import DeleteContactModal from '../../DeleteContactModal';
+import EditContactModal from '../../EditContactModal';
 
 import styles from './Contact.module.css';
 
 const Contact = ({ name, id, contactNumber }) => {
-  const dispatch = useDispatch();
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
-  const handleDeleteContact = () => dispatch(deleteContact(id));
+  const handleDeleteContact = () => setIsDeleting(true);
+  const handleRejectDeletion = () => setIsDeleting(false);
+
+  const handleEditContact = () => setIsEditing(true);
+  const handleCancelEditContact = () => setIsEditing(false);
 
   return (
     <li className={styles.contactItem}>
-      <div>
-        <p className={styles.text}>
-          <FaUser className={styles.icon} /> {name}
-        </p>
-        <p className={styles.text}>
-          <FaPhoneAlt className={styles.icon} /> {contactNumber}
-        </p>
-      </div>
-      <button type="button" className={styles.deleteBtn} onClick={handleDeleteContact}>
-        Delete
-      </button>
+      {isDeleting && <DeleteContactModal id={id} onReject={handleRejectDeletion} />}
+      {isEditing && (
+        <EditContactModal
+          id={id}
+          name={name}
+          contactNumber={contactNumber}
+          onCancel={handleCancelEditContact}
+        />
+      )}
+      {!isDeleting && !isEditing && (
+        <>
+          <div>
+            <p className={styles.text}>
+              <FaUser className={styles.icon} /> {name}
+            </p>
+            <p className={styles.text}>
+              <FaPhoneAlt className={styles.icon} /> {contactNumber}
+            </p>
+          </div>
+          <div className={styles.buttonWrapper}>
+            <button type="button" className={styles.button} onClick={handleDeleteContact}>
+              Delete
+            </button>
+            <button type="button" className={styles.button} onClick={handleEditContact}>
+              Edit
+            </button>
+          </div>
+        </>
+      )}
     </li>
   );
 };

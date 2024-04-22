@@ -47,3 +47,7 @@ button {
   cursor: pointer;
   font-size: inherit;
 }
+
+a {
+  text-decoration: none;
+}

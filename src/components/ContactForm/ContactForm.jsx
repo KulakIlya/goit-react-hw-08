@@ -1,15 +1,15 @@
 import { Form, Formik } from 'formik';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
-import FormLabel from './FormLabel';
+import FormLabel from '../FormLabel';
 
-import { addContact } from '../../redux/contactsOps';
+import { addContact } from '../../redux/contacts/operations';
 
+import toast, { Toaster } from 'react-hot-toast';
 import styles from './ContactForm.module.css';
 
-const INITIAL_VALUES = { name: '', number: '', id: '' };
+const INITIAL_VALUES = { name: '', number: '' };
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   name: Yup.string().required('Required').min(3, 'Too short').max(50, 'Too long'),
@@ -20,28 +20,31 @@ const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(addContact({ ...values }));
+    dispatch(addContact({ ...values }))
+      .unwrap()
+      .then(() => {
+        toast.success('Added');
+      });
     actions.resetForm();
   };
 
   return (
-    <Formik
-      initialValues={INITIAL_VALUES}
-      onSubmit={handleSubmit}
-      validationSchema={VALIDATION_SCHEMA}
-    >
-      <Form className={styles.form} autoComplete="off">
-        <FormLabel title="name" />
-        <FormLabel title="number" />
-        <button type="submit" className={styles.btn}>
-          Add contact
-        </button>
-      </Form>
-    </Formik>
+    <>
+      <Formik
+        initialValues={INITIAL_VALUES}
+        onSubmit={handleSubmit}
+        validationSchema={VALIDATION_SCHEMA}
+      >
+        <Form className={styles.form} autoComplete="off">
+          <FormLabel title="name" />
+          <FormLabel title="number" />
+          <button type="submit" className={styles.btn}>
+            Add contact
+          </button>
+        </Form>
+      </Formik>
+      <Toaster />
+    </>
   );
 };
 export default ContactForm;
-
-ContactForm.propTypes = {
-  handleAddContact: PropTypes.func,
-};

@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeFilter } from '../../redux/filtersSlice';
-import { selectNameFilter } from '../../redux/selectors';
+import { selectContactFilter } from '../../redux/filters/selectors';
+import { changeFilter } from '../../redux/filters/slice';
 
 import styles from './SearchBox.module.css';
 
 const SearchBox = () => {
-  const filter = useSelector(selectNameFilter);
+  const filter = useSelector(selectContactFilter);
   const dispatch = useDispatch();
 
   const handleFilterChange = e => dispatch(changeFilter(e.target.value.toLowerCase()));

@@ -1,16 +1,9 @@
-.contactItem {
-  flex-basis: 350px;
-  height: 120px;
-
-  margin-bottom: 10px;
-  padding: 12px 10px;
+.form {
+  width: 100%;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  border: 1px solid #000000;
-  border-radius: 3px;
 
   font-size: 18px;
 }
@@ -25,14 +18,14 @@
   height: 16px;
 }
 
-.text {
+.label {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
-.text:first-child {
-  margin-bottom: 26px;
+.label:first-child {
+  margin-bottom: 20px;
 }
 
 .buttonWrapper button {
