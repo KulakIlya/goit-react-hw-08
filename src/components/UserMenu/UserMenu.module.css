@@ -6,6 +6,16 @@
   font-weight: 700;
 }
 
+.welcomeText {
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .welcomeText {
+    display: block;
+  }
+}
+
 .button {
   padding: 5px;
 }

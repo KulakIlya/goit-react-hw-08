@@ -16,15 +16,15 @@ const VALIDATION_SCHEMA = Yup.object().shape({
   number: Yup.string().required('Required').min(3, 'Too short').max(50, 'Too long'),
 });
 
+const showAddNotification = () => toast.success('Added');
+
 const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
     dispatch(addContact({ ...values }))
       .unwrap()
-      .then(() => {
-        toast.success('Added');
-      });
+      .then(showAddNotification);
     actions.resetForm();
   };
 

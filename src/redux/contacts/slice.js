@@ -5,7 +5,6 @@ import { addContact, deleteContact, fetchContacts, updateContact } from './opera
 const initialState = {
   items: [],
   loading: false,
-  error: null,
 };
 
 const setLoading = state => {

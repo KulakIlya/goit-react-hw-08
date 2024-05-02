@@ -1,10 +1,9 @@
 import { Form, Formik } from 'formik';
-import toast, { Toaster } from 'react-hot-toast';
-import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 import { logIn } from '../../redux/auth/operations';
-import { selectErrorMessage } from '../../redux/auth/selectors';
 
 import FormLabel from '../FormLabel';
 
@@ -15,18 +14,17 @@ const INITIAL_VALUES = {
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   email: Yup.string().email('Enter valid email address').required('Required'),
-  password: Yup.string().required('Required').min(7, 'Password must be longer'),
+  password: Yup.string().required('Required'),
 });
 
-const LoginForm = () => {
-  const error = useSelector(selectErrorMessage);
+const showErrorMessage = error =>
+  toast.error(error === 400 ? 'Incorrect email or password' : 'Something went wrong');
 
+const LoginForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = values => {
-    dispatch(logIn(values))
-      .unwrap()
-      .catch(() => toast.error(error));
+    dispatch(logIn(values)).unwrap().catch(showErrorMessage);
   };
   return (
     <>
@@ -41,7 +39,6 @@ const LoginForm = () => {
           <button type="submit">Log in</button>
         </Form>
       </Formik>
-      <Toaster position="top-center" reverseOrder={false} />
     </>
   );
 };

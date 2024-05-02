@@ -4,13 +4,14 @@ import { deleteContact } from '../../redux/contacts/operations';
 import toast, { Toaster } from 'react-hot-toast';
 import styles from './DeleteContactModal.module.css';
 
+const showDeletedNotification = () => toast.success('Deleted');
+const showErrorNotification = () => toast.success('Something went wrong :(');
+
 const DeleteContactModal = ({ id, onReject }) => {
   const dispatch = useDispatch();
 
   const handleConfirmDelete = () =>
-    dispatch(deleteContact(id))
-      .unwrap()
-      .then(() => toast.success('Deleted'));
+    dispatch(deleteContact(id)).unwrap().then(showDeletedNotification).catch(showErrorNotification);
 
   return (
     <div>

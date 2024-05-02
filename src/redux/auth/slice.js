@@ -12,7 +12,6 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
-  error: null,
 };
 
 const setAuth = (state, { payload }) => {
@@ -27,14 +26,9 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(register.fulfilled, setAuth)
-      .addCase(register.rejected, (state, action) => {
-        if (action.payload === 400) state.error = { message: 'This email has already been taken' };
-        else state.error = action.payload;
-      })
+
       .addCase(logIn.fulfilled, setAuth)
-      .addCase(logIn.rejected, state => {
-        state.error = { message: 'Incorrect email or password' };
-      })
+
       .addCase(refreshUser.pending, state => {
         state.isRefreshing = true;
       })
@@ -42,10 +36,10 @@ const authSlice = createSlice({
         setAuth(state, action);
         state.isRefreshing = false;
       })
-      .addCase(refreshUser.rejected, (state, action) => {
-        state.error = { message: action.payload.message };
+      .addCase(refreshUser.rejected, state => {
         state.isRefreshing = false;
       })
+
       .addCase(logOut.fulfilled, state => {
         state.user = { name: null, email: null };
         state.token = null;

@@ -2,14 +2,18 @@ import { Field, Form, Formik } from 'formik';
 import { FaPhoneAlt, FaUser } from 'react-icons/fa';
 import * as Yup from 'yup';
 
+import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { updateContact } from '../../redux/contacts/operations';
 import styles from './EditContactModal.module.css';
 
 const VALIDATION_SCHEMA = Yup.object().shape({
-  name: Yup.string().required('Required').min(3, 'Too short').max(50, 'Too long'),
+  name: Yup.string().required('Required').min(2, 'Too short').max(50, 'Too long'),
   number: Yup.string().required('Required').min(3, 'Too short').max(50, 'Too long'),
 });
+
+const showSuccessMessage = () => toast.success('Edited!');
+const showErrorMessage = () => toast.error('Something went wrong :(');
 
 const EditContactModal = ({ name, id, contactNumber, onCancel }) => {
   const INITIAL_VALUES = { name, number: contactNumber };
@@ -22,7 +26,10 @@ const EditContactModal = ({ name, id, contactNumber, onCancel }) => {
   const handleSubmit = values => {
     if (hasValuesChanged(values)) return;
 
-    dispatch(updateContact({ ...values, id }));
+    dispatch(updateContact({ ...values, id }))
+      .unwrap()
+      .then(showSuccessMessage)
+      .catch(showErrorMessage);
     onCancel();
   };
 

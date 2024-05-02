@@ -1,7 +1,6 @@
 .contactItem {
-  flex-basis: 350px;
   height: 120px;
-
+  flex-basis: 100%;
   margin-bottom: 10px;
   padding: 12px 10px;
 
@@ -13,6 +12,23 @@
   border-radius: 3px;
 
   font-size: 18px;
+  overflow-x: hidden;
+}
+
+.contactItem > div:first-child {
+  width: 60%;
+}
+
+@media screen and (min-width: 768px) {
+  .contactItem {
+    flex-basis: calc((100% - 10px) / 2);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .contactItem {
+    flex-basis: 350px;
+  }
 }
 
 .button {
@@ -29,6 +45,14 @@
   display: flex;
   gap: 10px;
   align-items: center;
+}
+
+.textContent {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  white-space: nowrap;
 }
 
 .text:first-child {

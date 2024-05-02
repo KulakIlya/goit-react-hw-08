@@ -1,6 +1,7 @@
 .header {
   padding: 0 10px;
   border-bottom: 1px solid black;
+  max-width: 100vw;
 }
 
 .header a {

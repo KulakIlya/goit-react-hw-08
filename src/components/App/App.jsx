@@ -9,6 +9,7 @@ import Layout from '../Layout';
 import Loader from '../Loader';
 import PrivateRoute from '../PrivateRoute';
 import RestrictedRoute from '../RestrictedRoute';
+import { Toaster } from 'react-hot-toast';
 
 const HomePage = lazy(() => import('../../pages/HomePage/HomePage'));
 const RegisterPage = lazy(() => import('../../pages/RegisterPage'));
@@ -45,6 +46,7 @@ const App = () => {
           />
         </Routes>
       </Suspense>
+      <Toaster position="top-center" reverseOrder={false} />
     </Layout>
   );
 };

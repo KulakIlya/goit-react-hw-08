@@ -8,7 +8,6 @@ import EditContactModal from '../../EditContactModal';
 import styles from './Contact.module.css';
 
 const Contact = ({ name, id, contactNumber }) => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -33,10 +32,11 @@ const Contact = ({ name, id, contactNumber }) => {
         <>
           <div>
             <p className={styles.text}>
-              <FaUser className={styles.icon} /> {name}
+              <FaUser className={styles.icon} /> <span className={styles.textContent}>{name}</span>
             </p>
             <p className={styles.text}>
-              <FaPhoneAlt className={styles.icon} /> {contactNumber}
+              <FaPhoneAlt className={styles.icon} />
+              <span className={styles.textContent}>{contactNumber}</span>
             </p>
           </div>
           <div className={styles.buttonWrapper}>
